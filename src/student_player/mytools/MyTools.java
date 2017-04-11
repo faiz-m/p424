@@ -13,17 +13,19 @@ public class MyTools {
         return Math.random();
     }
     
+    //method to run simulations on a board state for monte carlo
     public static int simulate(BohnenspielBoardState board_state, int player){
     	while (board_state.gameOver()==false){
     		BohnenspielMove move = (BohnenspielMove) board_state.getRandomMove();
-    		if (board_state.isLegal(move) == false) System.out.println("Illegal move");
+    		//if (board_state.isLegal(move) == false) System.out.println("Illegal move");
     		board_state.move(move);
     	}
-    	if (board_state.gameOver() == true) System.out.println("gameover");
+    	//if (board_state.gameOver() == true) System.out.println("gameover");
     	if (board_state.getWinner()!=player) return 0;
     	else return 1;
     }
     
+    //evaluation function for the game
     public static int eval(BohnenspielBoardState board_state, int player, int depth){
     	if (player == 0){
     		return board_state.getScore(0) - board_state.getScore(1) + 2*(depth - 6) /*+ (board_state.getCredit(player) - 2 )*/;
@@ -33,10 +35,11 @@ public class MyTools {
     	}    	
     }
     
+    //minimax method
     public static int minimax(BohnenspielBoardState board_state, int player, int depth, int min, int max){
     	if (board_state.gameOver()==true | depth==0) return eval(board_state, player, depth);
 		ArrayList<BohnenspielMove> moves = board_state.getLegalMoves();
-    	if (board_state.getTurnPlayer() == player){
+    	if (board_state.getTurnPlayer() == player){//max node
     		int v = min;
     		for(int i=0; i<moves.size(); i++){
     			//System.out.println("Loop" + i);
@@ -51,7 +54,7 @@ public class MyTools {
         	return v;
     	}
     	    
-    	else{
+    	else{//min node
     		int v = max;
     		for(int i=0; i<moves.size(); i++){
     			//System.out.println("Loop" + i);

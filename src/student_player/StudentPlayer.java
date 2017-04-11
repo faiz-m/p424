@@ -27,36 +27,19 @@ public class StudentPlayer extends BohnenspielPlayer {
 bohnenspiel.RandomPlayer
      * for another example agent. */
     public BohnenspielMove chooseMove(BohnenspielBoardState board_state)
-    {
-        // Get the contents of the pits so we can use it to make decisions.
-        //int[][] pits = board_state.getPits();
-
-        // Use ``player_id`` and ``opponent_id`` to get my pits and opponent pits.
-        //int[] my_pits = pits[player_id];
-        //int[] op_pits = pits[opponent_id];
-
-        // Use code stored in ``mytools`` package.
-        //MyTools.getSomething();
-
-        // Get the legal moves for the current board state.
-        //ArrayList<BohnenspielMove> moves = board_state.getLegalMoves();
-        //BohnenspielMove move = moves.get(0);
-  
-     
-        // We can see the effects of a move like this...
-        //BohnenspielBoardState cloned_board_state = (BohnenspielBoardState) board_state.clone();
-        //cloned_board_state.move(move);
-
-
-        // But since this is a placeholder algorithm, we won't act on that information.
+    {    	
+    	//get available moves
     	ArrayList<BohnenspielMove> moves = board_state.getLegalMoves();
+    	//an array to store the results of minimax/monte carlo
     	int[] max = new int[moves.size()];
     	Arrays.fill(max, 0);
+    	//loop to run minimax on the available moves
     	for(int i=0; i<moves.size(); i++){
     		BohnenspielBoardState cloned_board_state = (BohnenspielBoardState) board_state.clone();
 	        cloned_board_state.move(moves.get(i));
     		max[i] = MyTools.minimax(cloned_board_state, board_state.getTurnPlayer(), 6, Integer.MIN_VALUE, Integer.MAX_VALUE);
     	}
+    	//loop to run monte carlo on the available moves. not used
 //    	for(int i=0; i<moves.size(); i++){
 //    		for(int j=0; j<10;j++){
 //    			BohnenspielBoardState cloned_board_state = (BohnenspielBoardState) board_state.clone();
@@ -64,22 +47,28 @@ bohnenspiel.RandomPlayer
 //    			max[i] += MyTools.simulate(cloned_board_state, board_state.getTurnPlayer());
 //    		}
 //    	}
-    	System.out.print(moves.size());
-    	for(int i=0; i<moves.size(); i++){
-    		System.out.print(max[i]);
-    	}
-    	System.out.println("");
+//		printing for debugging
+//    	System.out.print(moves.size());
+//    	for(int i=0; i<moves.size(); i++){
+//    		System.out.print(max[i]);
+//    	}
+//    	System.out.println("");
+    	
     	
     	int maxv = Integer.MIN_VALUE;
     	ArrayList<Integer> maxva = new ArrayList<Integer>();
+    	//get the highest value returned by search
     	for(int i=0; i<max.length; i++){
     		if (max[i]>maxv) maxv = max[i];
     	}
+    	//get the corresponding indexes for the moves leading to the highest scores
     	for(int i=max.length-1; i>=0; i--){
     		if (max[i]==maxv) maxva.add(i);
     	}
+    	//if there is a tie in best moves, choose by random
     	int maxvi = maxva.get(rand.nextInt(maxva.size()));
-    	System.out.println("maxv = " + maxv + "and maxvi= " + maxvi);
+//    	System.out.println("maxv = " + maxv + "and maxvi= " + maxvi);
+    	//return the move
     	return moves.get(maxvi);
     }
 }
