@@ -3,6 +3,7 @@ package student_player;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 import bohnenspiel.BohnenspielBoardState;
 import bohnenspiel.BohnenspielMove;
@@ -12,6 +13,7 @@ import student_player.mytools.MyTools;
 
 /** A Hus player submitted by a student. */
 public class StudentPlayer extends BohnenspielPlayer {
+	Random rand = new Random();
 
     /** You must modify this constructor to return your student number.
      * This is important, because this is what the code that runs the
@@ -69,13 +71,14 @@ bohnenspiel.RandomPlayer
     	System.out.println("");
     	
     	int maxv = Integer.MIN_VALUE;
-    	int maxvi = Integer.MIN_VALUE;
+    	ArrayList<Integer> maxva = new ArrayList<Integer>();
     	for(int i=0; i<max.length; i++){
     		if (max[i]>maxv) maxv = max[i];
     	}
     	for(int i=max.length-1; i>=0; i--){
-    		if (max[i]==maxv) maxvi = i;
+    		if (max[i]==maxv) maxva.add(i);
     	}
+    	int maxvi = maxva.get(rand.nextInt(maxva.size()));
     	System.out.println("maxv = " + maxv + "and maxvi= " + maxvi);
     	return moves.get(maxvi);
     }
