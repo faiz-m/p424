@@ -13,7 +13,6 @@ import student_player.mytools.MyTools;
 
 /** A Hus player submitted by a student. */
 public class StudentPlayer extends BohnenspielPlayer {
-	Random rand = new Random();
 
     /** You must modify this constructor to return your student number.
      * This is important, because this is what the code that runs the
@@ -27,7 +26,8 @@ public class StudentPlayer extends BohnenspielPlayer {
 bohnenspiel.RandomPlayer
      * for another example agent. */
     public BohnenspielMove chooseMove(BohnenspielBoardState board_state)
-    {    	
+    {
+    	Random rand = new Random();
     	//get available moves
     	ArrayList<BohnenspielMove> moves = board_state.getLegalMoves();
     	//an array to store the results of minimax/monte carlo
